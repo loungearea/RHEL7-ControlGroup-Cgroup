@@ -64,30 +64,30 @@ Para evidenciar cada item:
 ### Creating service file:
  
 	# cat > /etc/systemd/system/stress1.service << EEOOFF
-> [Unit]
-> Description=Estressando cpus e memórias
-> After=network.target
->
-> [Service]
-> Type=forking
-> User=user1
-> Group=group1
-> RemainAfterExit=no
-> WorkingDirectory=/home/user1
-> ExecStart=/bin/bash /home/user1/stress001.start.sh
-> ExecStop=/usr/bin/pkill stress
->
-> [Install]
-> WantedBy=multi-user.target
-> EEOOFF
+	> [Unit]
+	> Description=Estressando cpus e memórias
+	> After=network.target
+	>
+	> [Service]
+	> Type=forking
+	> User=user1
+	> Group=group1
+	> RemainAfterExit=no
+	> WorkingDirectory=/home/user1
+	> ExecStart=/bin/bash /home/user1/stress001.start.sh
+	> ExecStop=/usr/bin/pkill stress
+	>
+	> [Install]
+	> WantedBy=multi-user.target
+	> EEOOFF
 
 ### Creating Script file: 
 
 	# cat > /home/user1/stress1.start.sh << EEOOFF
-> #!/bin/bash
-> stress --vm 20 > /dev/null &
-> echo 0
-> EEOOFF
+	> #!/bin/bash
+	> stress --vm 20 > /dev/null &
+	> echo 0
+	> EEOOFF	
 
 	# chmod a+x /home/user1/stress1.start.sh
 
