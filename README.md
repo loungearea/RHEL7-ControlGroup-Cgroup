@@ -41,30 +41,30 @@ Listando cada conteúdo:
 
 Para evidenciar cada item:
 
-# systemd-cgtop
-# top
-# sar -P ALL 2
+	# systemd-cgtop
+	# top
+	# sar -P ALL 2
 
 ################################################
 LAB1 by open package stress (não tem na RedHat):
 ################################################
 
-# wget  http://download-ib01.fedoraproject.org/pub/fedora/linux/releases/29/Everything/x86_64/os/Packages/s/stress-1.0.4-21.fc29.x86_64.rpm
-# yum localinstall -y stress-1.0.4-21.fc29.x86_64.rpm
+	# wget  http://download-ib01.fedoraproject.org/pub/fedora/linux/releases/29/Everything/x86_64/os/Packages/s/stress-1.0.4-21.fc29.x86_64.rpm
+	# yum localinstall -y stress-1.0.4-21.fc29.x86_64.rpm
 
 ### Creating user and group:
 
-# useradd user1
-# useradd user2
-# useradd user3
-# groupadd group1
-# usermod -aG group1 user1
-# usermod -aG group1 user2
-# usermod -aG group1 user3
+	# useradd user1
+	# useradd user2
+	# useradd user3
+	# groupadd group1
+	# usermod -aG group1 user1
+	# usermod -aG group1 user2
+	# usermod -aG group1 user3
 
 ### Creating service file:
  
-# cat > /etc/systemd/system/stress1.service << EEOOFF
+	# cat > /etc/systemd/system/stress1.service << EEOOFF
 > [Unit]
 > Description=Estressando cpus e memórias
 > After=network.target
@@ -84,48 +84,48 @@ LAB1 by open package stress (não tem na RedHat):
 
 ### Creating Script file: 
 
-# cat > /home/user1/stress1.start.sh << EEOOFF
+	# cat > /home/user1/stress1.start.sh << EEOOFF
 > #!/bin/bash
 > stress --vm 20 > /dev/null &
 > echo 0
 > EEOOFF
 
-# chmod a+x /home/user1/stress1.start.sh
+	# chmod a+x /home/user1/stress1.start.sh
 
 ### Enabling and Starting stress1.service:
 
-# systemctl enable stress1 --now
+	# systemctl enable stress1 --now
 
 ### Check CPU:
 
-# sar -P ALL 5
-# top
+	# sar -P ALL 5
+	# top
 
 ### Implementing CPUQuota (%) ONLINE without restart:
 
-# systemctl set-property stress1 CPUQuota=33%
+	# systemctl set-property stress1 CPUQuota=33%
 
 ###  Check CPU:
 
-# sar -P ALL 5
-# top
-# systemd-cgtop
+	# sar -P ALL 5
+	# top
+	# systemd-cgtop
 
 ### Notice: A new file created on /etc/systemd/system/stress1.service.d:
 
-# cat /etc/systemd/system/stress1.service.d/50-CPUQuota.conf
-[Service]
-CPUQuota=33%
+	# cat /etc/systemd/system/stress1.service.d/50-CPUQuota.conf
+	[Service]
+	CPUQuota=33%
 
 ################################################
 ### LAB2 - Stress httpd:
 ################################################
 
-# ip a # to capture IP
-# ab -c 100 -n 1000000 http://192.168.152.129/index.html
-# sar -P ALL 5
-# top
-# systemd-cgtop
+	# ip a # to capture IP
+	# ab -c 100 -n 1000000 http://192.168.152.129/index.html
+	# sar -P ALL 5
+	# top
+	# systemd-cgtop
 
 O problema é que um único processo "ab" gargala em uma cpu.
 Vamos encapsular o "ab" limitando por usuário - já que "ab" não é um systemd service.
