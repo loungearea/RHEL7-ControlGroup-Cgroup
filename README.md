@@ -1,4 +1,5 @@
 # RHEL7-ControlGroup-Cgroup
+
 RHEL 7 - Control Group - CGroup
 Serviços systemd de RHEL7 possuem limitadores do uso de CPU em 3 formas:
 
@@ -45,9 +46,7 @@ Para evidenciar cada item:
 	# top
 	# sar -P ALL 2
 
-_####################################################
-_### LAB1 by open package stress (não tem na RedHat):
-_####################################################
+# LAB1 by open package stress (não tem na RedHat):
 
 	# wget  http://download-ib01.fedoraproject.org/pub/fedora/linux/releases/29/Everything/x86_64/os/Packages/s/stress-1.0.4-21.fc29.x86_64.rpm
 	# yum localinstall -y stress-1.0.4-21.fc29.x86_64.rpm
@@ -117,9 +116,7 @@ _####################################################
 	[Service]
 	CPUQuota=33%
 
--################################################
--### LAB2 - Stress httpd:
--################################################
+# LAB2 - Stress httpd:
 
 	# ip a # to capture IP
 	# ab -c 100 -n 1000000 http://192.168.152.129/index.html
